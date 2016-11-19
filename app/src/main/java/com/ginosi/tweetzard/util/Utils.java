@@ -21,6 +21,6 @@ public class Utils {
     }
 
     public static boolean isLoginNecessary() {
-        return PreferenceManager.getInstance().getUserTweeterId() != 0 && !PreferenceManager.getInstance().getUserTweeterName().isEmpty();
+        return PreferenceManager.getInstance().getUserTweeterId() == 0 && PreferenceManager.getInstance().getUserTweeterName().isEmpty();
     }
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.ginosi.tweetzard.activity.TweetActivity;
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                Log.d("heghine", "TwitterCallback: success: result = " + result.data.toString());
                 String username = result.data.getUserName();
                 long userId = result.data.getUserId();
 
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
 
             @Override
             public void failure(TwitterException exception) {
-                Log.d("heghine", "TwitterCallback: failure: exception = " + exception.getMessage());
             }
         });
 

@@ -5,6 +5,10 @@
     <string name="photo">Photo</string>
     <string name="welcome_message">Welcome to Tweetzard!</string>
     <string name="tweet_history">Tweet History</string>
+    <string name="no_tweets">No Tweets</string>
+    <string name="loading">Loading …</string>
     <string name="internet_connection">Connected to Internet!</string>
     <string name="no_internet_connection">Please, check your Internet connection.</string>
+    <string name="empty_tweet">Please, add some text to tweet</string>
+    <string name="grant_this_perm">Please, grant this permission to continue</string>
 </resources>
