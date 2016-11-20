@@ -3,12 +3,12 @@ package com.ginosi.tweetzard.activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 
 import com.ginosi.tweetzard.R;
 import com.ginosi.tweetzard.manager.ConnectivityManager;
 import com.ginosi.tweetzard.manager.PreferenceManager;
 import com.ginosi.tweetzard.util.ConnectivityChangeListener;
+import com.ginosi.tweetzard.util.Utils;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
@@ -39,6 +39,10 @@ public class TweetHistoryActivity extends ListActivity implements ConnectivityCh
     protected void onStart() {
         super.onStart();
 
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showNetworkMessage(false, TweetHistoryActivity.this, findViewById(R.id.activity_tweet_history));
+        }
+
         ConnectivityManager.getInstance().subscribe(this);
     }
 
@@ -51,22 +55,7 @@ public class TweetHistoryActivity extends ListActivity implements ConnectivityCh
 
     @Override
     public void onConnectivityChanged(boolean isConnected) {
-        showNetworkMessage(isConnected);
+        Utils.showNetworkMessage(isConnected, TweetHistoryActivity.this, findViewById(R.id.activity_tweet_history));
     }
 
-    private void showNetworkMessage(boolean isConnected) {
-        String message;
-        int duration;
-        if (isConnected) {
-            message = getResources().getString(R.string.internet_connection);
-            duration = Snackbar.LENGTH_SHORT;
-        } else {
-            message = getResources().getString(R.string.no_internet_connection);
-            duration = Snackbar.LENGTH_INDEFINITE;
-        }
-
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_tweet_history), message, Snackbar.LENGTH_LONG);
-        snackbar.setDuration(duration);
-        snackbar.show();
-    }
 }

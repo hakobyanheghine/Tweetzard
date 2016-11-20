@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
 
         PreferenceManager.getInstance().init(this);
 
-        boolean isConnected = Utils.isNetworkAvailable(this);
-        if (!isConnected) {
-            showNetworkMessage(isConnected);
-        }
-
         loginButton = (TwitterLoginButton) findViewById(R.id.activity_main_login_btn);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
@@ -72,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
     protected void onStart() {
         super.onStart();
 
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showNetworkMessage(false, MainActivity.this, findViewById(R.id.activity_main));
+        }
+
         ConnectivityManager.getInstance().subscribe(this);
     }
 
@@ -91,24 +90,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
 
     @Override
     public void onConnectivityChanged(boolean isConnected) {
-        showNetworkMessage(isConnected);
+        Utils.showNetworkMessage(isConnected, MainActivity.this, findViewById(R.id.activity_main));
     }
 
-    private void showNetworkMessage(boolean isConnected) {
-        String message;
-        int duration;
-        if (isConnected) {
-            message = getResources().getString(R.string.internet_connection);
-            duration = Snackbar.LENGTH_SHORT;
-        } else {
-            message = getResources().getString(R.string.no_internet_connection);
-            duration = Snackbar.LENGTH_INDEFINITE;
-        }
-
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), message, Snackbar.LENGTH_LONG);
-        snackbar.setDuration(duration);
-        snackbar.show();
-    }
 
     private void startTweetActivity() {
         MainActivity.this.runOnUiThread(new Runnable() {

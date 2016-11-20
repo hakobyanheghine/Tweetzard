@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.ginosi.tweetzard.R;
 import com.ginosi.tweetzard.manager.ConnectivityManager;
 import com.ginosi.tweetzard.util.ConnectivityChangeListener;
+import com.ginosi.tweetzard.util.Utils;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -42,6 +42,7 @@ public class TweetActivity extends AppCompatActivity implements ConnectivityChan
             @Override
             public void onClick(View view) {
                 String tweetText = tweetEditText.getText().toString();
+
                 if (tweetText.isEmpty() && imageUri == null) {
                     Toast.makeText(TweetActivity.this, R.string.empty_tweet, Toast.LENGTH_LONG).show();
                 } else if (tweetText.isEmpty() && imageUri != null) {
@@ -57,13 +58,9 @@ public class TweetActivity extends AppCompatActivity implements ConnectivityChan
                             .text(tweetText)
                             .image(imageUri);
                     builder.show();
-
-//                    TwitterSession session = Twitter.getSessionManager().getActiveSession();
-//                    Intent intent = new ComposerActivity.Builder(TweetActivity.this)
-//                            .session(session)
-//                            .createIntent();
-//                    startActivity(intent);
                 }
+
+                // resetting data
                 tweetEditText.setText("");
                 imageUri = null;
             }
@@ -91,6 +88,10 @@ public class TweetActivity extends AppCompatActivity implements ConnectivityChan
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showNetworkMessage(false, TweetActivity.this, findViewById(R.id.activity_tweet));
+        }
 
         ConnectivityManager.getInstance().subscribe(this);
     }
@@ -122,24 +123,9 @@ public class TweetActivity extends AppCompatActivity implements ConnectivityChan
 
     @Override
     public void onConnectivityChanged(boolean isConnected) {
-        showNetworkMessage(isConnected);
+        Utils.showNetworkMessage(isConnected, TweetActivity.this, findViewById(R.id.activity_tweet));
     }
 
-    private void showNetworkMessage(boolean isConnected) {
-        String message;
-        int duration;
-        if (isConnected) {
-            message = getResources().getString(R.string.internet_connection);
-            duration = Snackbar.LENGTH_SHORT;
-        } else {
-            message = getResources().getString(R.string.no_internet_connection);
-            duration = Snackbar.LENGTH_INDEFINITE;
-        }
-
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_tweet), message, Snackbar.LENGTH_LONG);
-        snackbar.setDuration(duration);
-        snackbar.show();
-    }
 
     private void startTweetHistoryActivity() {
         TweetActivity.this.runOnUiThread(new Runnable() {
