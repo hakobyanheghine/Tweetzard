@@ -22,34 +22,50 @@
         android:textSize="16sp"
         android:typeface="sans"/>
 
-    <Button
-        android:id="@+id/activity_tweet_tweet_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/activity_tweet_tweet_edit"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorTwitter"
-        android:padding="5dp"
-        android:text="@string/tweet"/>
 
-    <Button
-        android:id="@+id/activity_tweet_photo_btn"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/activity_tweet_action_cont"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@id/activity_tweet_tweet_edit"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorTwitter"
-        android:drawableLeft="@android:drawable/ic_menu_camera"
-        android:padding="5dp"
-        android:text="@string/photo"/>
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/activity_tweet_tweet_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorTwitter"
+            android:padding="5dp"
+            android:text="@string/tweet"/>
+
+        <Button
+            android:id="@+id/activity_tweet_photo_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@color/colorTwitter"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:padding="5dp"
+            android:text="@string/photo"/>
+
+        <ImageView
+            android:id="@+id/activity_tweet_done_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/activity_tweet_photo_btn"
+            android:src="@drawable/ic_done_black_36dp"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/activity_tweet_history_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/activity_tweet_photo_btn"
+        android:layout_below="@id/activity_tweet_action_cont"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/colorTwitter"

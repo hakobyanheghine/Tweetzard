@@ -63,6 +63,12 @@ public class TweetActivity extends AppCompatActivity implements ConnectivityChan
                 // resetting data
                 tweetEditText.setText("");
                 imageUri = null;
+                TweetActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.activity_tweet_done_img).setVisibility(View.GONE);
+                    }
+                });
             }
         });
 
@@ -114,6 +120,12 @@ public class TweetActivity extends AppCompatActivity implements ConnectivityChan
                     @Override
                     public void onImageSelected(Uri uri) {
                         imageUri = uri;
+                        TweetActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(R.id.activity_tweet_done_img).setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
                 })
                 .create();
